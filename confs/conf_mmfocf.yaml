@@ -1,0 +1,61 @@
+# model: MMFOCF
+
+seed: 883
+reoroducibility: True
+LABEL_FIELD: label
+threshold: {'rating': 3.0}
+TIME_FIELD: timestamp
+sst_attr_list: ['gender']
+
+additional_feat_suffix: [minilm, vit]
+load_col:
+  inter: [user_id,item_id,rating,timestamp]
+  user: [user_id,gender]
+  minilm: [minilm_iid, minilm_emb]
+  vit: [vit_iid, vit_emb]
+alias_of_item_id: [minilm_iid, vit_iid]
+preload_weight:
+    minilm_iid: minilm_emb
+    vit_iid: vit_emb
+
+
+embedding_size: 64
+# fair_weight: 0.0001
+# weight_decay: 0.0001
+# fair_objective: value
+
+epochs: 100
+learning_rate: 0.001
+train_batch_size: 2048
+eval_batch_size: 8192
+stopping_step: 10
+
+eval_args:
+  split: {'RS': [8, 1, 1]}
+  group_by: user
+  order: RO
+  mode: uni100
+
+
+metrics: [
+
+    # accuracy
+    "NDCG", "Recall", "Hit", "MRR", "Precision", "MAP",
+
+    # beyond-accuracy
+    "GiniIndex", "ItemCoverage", "ShannonEntropy", "PopularityPercentage",
+
+    # fairness binary sensitive attributes
+    "ValueUnfairness", 
+    "AbsoluteUnfairness", 
+    "UnderUnfairness", 
+    "OverUnfairness",
+
+    # fairness N-classes
+    "NonParityUnfairness", 
+    "DifferentialFairness",
+]
+
+valid_metric: NDCG@5
+topk: [5, 10, 20, 50]
+popularity_ratio: 0.1
