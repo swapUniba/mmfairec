@@ -64,7 +64,7 @@ Experiments are conducted on **MovieLens-1M** (ML1M), extended with multimodal f
 | Textual features | MiniLM (384-d) |
 | Visual features | ViT (768-d) |
 
-The multimodal features are sourced from Spillo et al. (RecSys 2025). The sensitive attribute used for fairness evaluation is **gender**.
+The multimodal features are sourced from the paper [See the Movie, Hear the Song, Read the Book](https://dl.acm.org/doi/10.1145/3705328.3748162) (RecSys '25). The sensitive attribute used for fairness evaluation is **gender**.
 
 The dataset files are located under `dataset/mm_ml1m/` and follow the RecBole atomic file format.
 
