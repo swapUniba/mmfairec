@@ -22,7 +22,7 @@ def recbole_run(model, dataset):
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', '-m', type=str, default=f'{model}', help='name of models')
     parser.add_argument('--dataset', '-d', type=str, default=f'{dataset}', help='name of datasets')
-    parser.add_argument('--config_files', '-c', type=str, default='current_mmnfcf.yaml', help='config files')
+    parser.add_argument('--config_files', '-c', type=str, default='current_mmgcf.yaml', help='config files')
     
     args, _ = parser.parse_known_args()
 
@@ -75,45 +75,44 @@ def check_params(log_files, config_dict):
 if __name__ == '__main__':
 
     '''
-    dropout choice [0, 0.2, 0.4, 0.6, 0.8]
-    fair_weight choice [0.0001, 0.001, 0.01]
     weight_decay choice [0.0001, 0.001, 0.01]
+    n_layers choice [1,2,3,4]
     '''
 
-    model = 'MMNFCF'
+    model = 'MMGCF'
     dataset = 'mm_ml1m'
 
     # create folder if not existing
     os.makedirs('log', exist_ok=True)
     os.makedirs(f'log/{model}/', exist_ok=True)
     
-    for dropout in [0, 0.2, 0.4, 0.6, 0.8]:
-        for fair_weight in [0.0001, 0.001, 0.01]:
-            for weight_decay in [0.0001, 0.001, 0.01]:
+    for weight_decay in [0.0001, 0.001, 0.01]:
+        for n_layers in [1,2,3,4]:
 
-                # check if this exists in the log
-                # i need to check:
-                # - dataset
-                # - model
-                # - param values
+            # check if this exists in the log
+            # i need to check:
+            # - dataset
+            # - model
+            # - param values
 
-                # i use a dict str -> value to give the function these config
+            # i use a dict str -> value to give the function these config
 
-                config_dict = {
-                    'dropout': dropout,
-                    'fair_weight': fair_weight,
-                    'weight_decay': weight_decay
+            config_dict = {
+                'weight_decay': weight_decay,
+                'n_layers': n_layers,
 
-                }
+            }
 
-                logs = [f'log/MMNFCF/{log_file}' for log_file in os.listdir('log/MMNFCF/')]
-                
-                # this run must be started
-                if not check_params(logs, config_dict):
+            logs = [f'log/{model}/{log_file}' for log_file in os.listdir(f'log/{model}/')]
+            
+            # this run must be started
+            if not check_params(logs, config_dict):
 
-                    # run the model with this setting
-                    shutil.copy('confs/conf_mmnfcf.yaml', 'current_mmnfcf.yaml')
-                    with open('current_mmnfcf.yaml', 'a') as f:
-                        f.write(f'\ndropout: {dropout}\nfair_weight: {fair_weight}\nweight_decay: {weight_decay}')
-                    recbole_run(model, dataset)
-                    os.remove('current_mmnfcf.yaml')
+                # run the model with this setting
+                shutil.copy('confs/conf_mmgcf.yaml', 'current_mmgcf.yaml')
+                with open('current_mmgcf.yaml', 'a') as f:
+                    f.write(f'\nweight_decay: {weight_decay}\nn_layers: {n_layers}')
+                recbole_run(model, dataset)
+                os.remove('current_mmgcf.yaml')
+            
+    

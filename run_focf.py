@@ -82,6 +82,10 @@ if __name__ == '__main__':
 
     model = 'FOCF'
     dataset = 'mm_ml1m'
+
+    # create folder if not existing
+    os.makedirs('log', exist_ok=True)
+    os.makedirs(f'log/{model}/', exist_ok=True)
     
     for fair_objective in ['value', 'absolute', 'under', 'over', 'nonparity', 'none']:
         for fair_weight in [0.0001, 0.001, 0.01]:

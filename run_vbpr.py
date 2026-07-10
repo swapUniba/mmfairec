@@ -81,6 +81,10 @@ if __name__ == '__main__':
     model = 'VBPR'
     dataset = 'mm_ml1m'
     
+    # create folder if not existing
+    os.makedirs('log', exist_ok=True)
+    os.makedirs(f'log/{model}/', exist_ok=True)
+    
     for weight_decay in [0.0001, 0.001, 0.01]:
 
         # check if this exists in the log

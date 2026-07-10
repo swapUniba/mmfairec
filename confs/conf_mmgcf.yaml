@@ -1,4 +1,4 @@
-model: MMFOCF
+model: MMGCF
 
 seed: 883
 reoroducibility: True
@@ -17,7 +17,6 @@ alias_of_item_id: [minilm_iid, vit_iid]
 preload_weight:
     minilm_iid: minilm_emb
     vit_iid: vit_emb
-
 
 embedding_size: 64
 # fair_weight: 0.0001

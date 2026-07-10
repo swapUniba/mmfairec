@@ -26,6 +26,8 @@ mmfairec/
 ├── recbole/                 # Extended RecBole source code (models, trainers, etc.)
 ├── run_bpr.py               # Grid-search runner for BPR
 ├── run_vbpr.py              # Grid-search runner for VBPR
+├── run_lightgcn.py          # Grid-search runner for LightGCN
+├── run_mmgcf.py             # Grid-search runner for MMGCF
 ├── run_focf.py              # Grid-search runner for FOCF
 ├── run_mmfocf.py            # Grid-search runner for MM-FOCF
 ├── run_nfcf.py              # Grid-search runner for NFCF
@@ -42,6 +44,8 @@ The repository evaluates six recommendation models, covering pure collaborative 
 |-------|------|-------------|
 | **BPR** | CF baseline | Bayesian Personalized Ranking; learns user/item embeddings from interaction data only. |
 | **VBPR** | Multimodal | Extends BPR via late-fusion of pre-trained visual and textual item features. |
+| **LightGCN** | CF baseline | Learns user/item embeddings through GCN's message passing over layers. |
+| **MMGCF** | Multimodal | Extends LightGCN via late-fusion of pre-trained visual and textual item features. |
 | **FOCF** | Fairness-aware | Adds differentiable fairness objectives directly into the CF optimization loop. |
 | **MM-FOCF** | Multimodal + fairness | FOCF extended with multimodal item embeddings via the late-fusion strategy described in the paper. |
 | **NFCF** | Fairness-aware | Debiases user embeddings using a layer orthogonal to the sensitive attribute. |
@@ -120,11 +124,13 @@ Each `run_*.py` script performs an automated **grid search** over the relevant h
 ### Running individual models
 
 ```bash
-# Collaborative filtering baseline
+# Pure CF models
 python run_bpr.py
+python run_lightgcn.py
 
-# Multimodal baseline
+# Multimodal models
 python run_vbpr.py
+python run_mmgcf.py
 
 # Fairness-aware (CF only)
 python run_focf.py
@@ -142,6 +148,7 @@ Each model reads its base configuration from the corresponding YAML file in `con
 | Model | Hyperparameter(s) |
 |-------|-------------------|
 | BPR, VBPR | `weight_decay` ∈ {0.0001, 0.001, 0.01} |
+| LightGCN, MMGCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `n_layers` ∈ {1,2,3,4} |
 | FOCF, MM-FOCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `fairness_weight` ∈ {0.0001, 0.001, 0.01}; `fairness_objective` ∈ {value, absolute, under, over, nonparity, none} |
 | NFCF, MM-NFCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `fairness_weight` ∈ {0.0001, 0.001, 0.01}; `dropout` ∈ {0, 0.2, 0.4, 0.6, 0.8} |
 
@@ -165,42 +172,6 @@ Experiments were run on:
 - CPU: Intel Xeon Silver 4309Y
 - GPU: NVIDIA A16
 - PyTorch 2.9, CUDA 12.8
-
----
-
-## Citation
-
-If you use this code or the results reported in the paper, please cite:
-
-```bibtex
-@inproceedings{spillo2026assessing,
-  title     = {Assessing Biases in Multimodal Recommender Systems: Balancing Accuracy and Fairness for Social Sustainability},
-  author    = {Spillo, Giuseppe and De Filippo, Allegra and Musto, Cataldo and Milano, Michela and Semeraro, Giovanni},
-  booktitle = {Proceedings of the UMAP4Good Workshop},
-  year      = {2026}
-}
-```
-
-Please also cite the underlying frameworks:
-
-```bibtex
-@inproceedings{zhao2022recbole2,
-  title     = {RecBole 2.0: Towards a More Up-to-Date Recommendation Library},
-  author    = {Zhao, Wayne Xin and Hou, Yupeng and Pan, Xingyu and others},
-  booktitle = {Proceedings of the 31st ACM CIKM},
-  year      = {2022}
-}
-```
-
----
-
-## Authors
-
-- Giuseppe Spillo — University of Bari Aldo Moro (`giuseppe.spillo@uniba.it`)
-- Allegra De Filippo — University of Bologna (`allegra.defilippo@unibo.it`)
-- Cataldo Musto — University of Bari Aldo Moro (`cataldo.musto@uniba.it`)
-- Michela Milano — University of Bologna (`michela.milano@unibo.it`)
-- Giovanni Semeraro — University of Bari Aldo Moro (`giovanni.semeraro@uniba.it`)
 
 ---
 

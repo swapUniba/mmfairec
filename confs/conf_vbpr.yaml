@@ -1,4 +1,4 @@
-# model: MMFOCF
+model: VBPR
 
 seed: 883
 reoroducibility: True

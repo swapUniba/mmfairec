@@ -1,4 +1,4 @@
-model: MMFOCF
+model: LightGCN
 
 seed: 883
 reoroducibility: True
@@ -7,17 +7,9 @@ threshold: {'rating': 3.0}
 TIME_FIELD: timestamp
 sst_attr_list: ['gender']
 
-additional_feat_suffix: [minilm, vit]
 load_col:
   inter: [user_id,item_id,rating,timestamp]
   user: [user_id,gender]
-  minilm: [minilm_iid, minilm_emb]
-  vit: [vit_iid, vit_emb]
-alias_of_item_id: [minilm_iid, vit_iid]
-preload_weight:
-    minilm_iid: minilm_emb
-    vit_iid: vit_emb
-
 
 embedding_size: 64
 # fair_weight: 0.0001

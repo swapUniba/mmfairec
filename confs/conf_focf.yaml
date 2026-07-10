@@ -1,4 +1,4 @@
-# model: MMFOCF
+model: FOCF
 
 seed: 883
 reoroducibility: True

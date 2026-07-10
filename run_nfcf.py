@@ -82,6 +82,10 @@ if __name__ == '__main__':
 
     model = 'NFCF'
     dataset = 'mm_ml1m'
+
+    # create folder if not existing
+    os.makedirs('log', exist_ok=True)
+    os.makedirs(f'log/{model}/', exist_ok=True)
     
     for dropout in [0, 0.2, 0.4, 0.6, 0.8]:
         for fair_weight in [0.0001, 0.001, 0.01]:
