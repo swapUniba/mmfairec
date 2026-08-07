@@ -1,6 +1,6 @@
-## **Assessing Biases in Multimodal Recommender Systems: Balancing Accuracy and Fairness for Social Sustainability**
+## **Assessing Biases in Multimodal Recommender Systems: Analyzing the Accuracy-Fairness trade-off for Social Sustainability**
 
-This repository contains the code and experimental setup for the paper *"Assessing Biases in Multimodal Recommender Systems: Balancing Accuracy and Fairness for Social Sustainability"*. The work investigates the interplay between multimodal features and demographic fairness in Recommender Systems (RS), evaluating both accuracy-oriented and fairness-oriented models on the MovieLens-1M dataset.
+This repository contains the code and experimental setup for the paper *"Assessing Biases in Multimodal Recommender Systems: Analyzing the Accuracy-Fairness trade-off for Social Sustainability"*. The work investigates the interplay between multimodal features and demographic fairness in Recommender Systems (RS), evaluating both accuracy-oriented and fairness-oriented models on the MovieLens-1M dataset.
 
 ---
 
