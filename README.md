@@ -46,6 +46,7 @@ The repository evaluates six recommendation models, covering pure collaborative 
 | **VBPR** | Multimodal | Extends BPR via late-fusion of pre-trained visual and textual item features. |
 | **LightGCN** | CF baseline | Learns user/item embeddings through GCN's message passing over layers. |
 | **MMGCF** | Multimodal | Extends LightGCN via late-fusion of pre-trained visual and textual item features. |
+| **FREEDOM** | Multimodal | Uses freezed GCNs on an item-item modality-aware graph. |
 | **FOCF** | Fairness-aware | Adds differentiable fairness objectives directly into the CF optimization loop. |
 | **MM-FOCF** | Multimodal + fairness | FOCF extended with multimodal item embeddings via the late-fusion strategy described in the paper. |
 | **NFCF** | Fairness-aware | Debiases user embeddings using a layer orthogonal to the sensitive attribute. |
@@ -131,6 +132,7 @@ python run_lightgcn.py
 # Multimodal models
 python run_vbpr.py
 python run_mmgcf.py
+python run_freedom.py
 
 # Fairness-aware (CF only)
 python run_focf.py
@@ -149,6 +151,7 @@ Each model reads its base configuration from the corresponding YAML file in `con
 |-------|-------------------|
 | BPR, VBPR | `weight_decay` ∈ {0.0001, 0.001, 0.01} |
 | LightGCN, MMGCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `n_layers` ∈ {1,2,3,4} |
+| FREEDOM | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `n_layers` ∈ {1,2,3,4}; `knn` ∈ {10,20}|
 | FOCF, MM-FOCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `fairness_weight` ∈ {0.0001, 0.001, 0.01}; `fairness_objective` ∈ {value, absolute, under, over, nonparity, none} |
 | NFCF, MM-NFCF | `weight_decay` ∈ {0.0001, 0.001, 0.01}; `fairness_weight` ∈ {0.0001, 0.001, 0.01}; `dropout` ∈ {0, 0.2, 0.4, 0.6, 0.8} |
 
